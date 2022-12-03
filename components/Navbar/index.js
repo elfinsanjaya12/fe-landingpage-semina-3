@@ -1,12 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import NavLink from '../NavLink';
 import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
 
 export default function Navbar() {
   const router = useRouter();
-  const [token, setToken] = useState(false);
+  const [token, setToken] = useState('');
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    return setToken(Cookies.get('token'));
+  });
+
+  const handleLogout = () => {
+    console.log('click');
+    Cookies.remove('token');
+    router.push('/');
+  };
 
   return (
     <nav className='container navbar navbar-expand-lg navbar-dark'>
